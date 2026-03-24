@@ -384,7 +384,7 @@ input:active {
 
 /* Animation utility classes - add these to start typing animations */
 .anim-typewriter-line {
-  animation: typewriter 3s steps(40) forwards, blinkCursor 600ms steps(40) infinite;
+  animation: typewriter 4s steps(40) forwards, blinkCursor 600ms steps(40) infinite;
 }
 
 .anim-typewriter-main {
@@ -394,15 +394,15 @@ input:active {
 
 /* === STAGGER TIMING === */
 .result-line-1 {
-  animation-delay: 0.5s;
+  animation-delay: 0.2s;
 }
 
 .result-line-2 {
-  animation-delay: 2.5s;
+  animation-delay: 2.0s;
 }
 
 .result-line-3 {
-  animation-delay: 4.5s;
+  animation-delay: 4.0s;
 }
 
 
@@ -444,7 +444,7 @@ input:active {
 
 /* === ANIMATIONS === */
 @keyframes fadeIn {
-  0%, 30% { opacity: 0; }
+  0%, 20% { opacity: 0; }
   100% { opacity: 1; }
 }
 
