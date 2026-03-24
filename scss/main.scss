@@ -1,0 +1,12 @@
+// 7-1 SCSS entry — import partials in logical order
+@use "./abstracts/variables";
+
+@import "./base/base";
+@import "./layout/layout";
+@import "./components/typography";
+@import "./components/forms";
+@import "./components/buttons";
+@import "./components/results";
+
+// pages and themes (empty now, add page-specific styles here)
+@import "./pages/_home";
