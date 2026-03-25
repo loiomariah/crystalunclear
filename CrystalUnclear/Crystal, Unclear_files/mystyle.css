@@ -1,0 +1,638 @@
+/* === FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+
+
+/* === VARIABLES === */
+:root {
+  /* fonts */
+  --font-main: "Metamorphous", serif;
+  --font-secondary: "Cormorant Garamond", serif;
+
+  /* colors */
+  --color-bg: #AE4762;
+  --color-text: #D5DFCD;
+  --color-shadow: #182125;
+  --color-accent: #ACB8D8;
+
+  /* effects */
+  --shadow-sm: 0.05em 0.05em var(--color-shadow);
+  --shadow-md: 0.1em 0.1em var(--color-shadow);
+  --shadow-lg: 0.2em 0.2em var(--color-shadow);
+
+  --glow-soft: 0 0 6px var(--color-accent);
+  --glow-strong: 0 0 10px var(--color-accent);
+
+  --radius-pill: 999px;
+
+  --transition-fast: 0.25s ease;
+}
+
+
+
+/* === BASE === */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-main);
+  font-weight: 700;
+
+  display: flex;
+  align-items: flex-start;
+
+  background-color: var(--color-bg);
+  overflow: hidden;
+
+  cursor: url('cursor.cur'), auto;
+}
+
+button,
+input {
+  cursor: url('cursor.cur'), auto;
+}
+
+button:active,
+input:active {
+  cursor: url('cursorclick.cur'), auto;
+}
+
+
+/* === BACKGROUND === */
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background: url('animation.gif') center / cover no-repeat fixed;
+}
+
+
+/* === LAYOUT === */
+.outer-container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 5%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+/* === ATMOSPHERE === */
+.outer-container::before,
+.outer-container::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.outer-container::before {
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 30%, transparent),
+    transparent 70%
+  );
+  animation: mysticalPulse 6s ease-in-out infinite;
+}
+
+.outer-container::after {
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    color-mix(in srgb, var(--color-accent) 20%, transparent),
+    transparent,
+    color-mix(in srgb, var(--color-accent) 30%, transparent),
+    transparent
+  );
+  animation: mysticalRotate 18s linear infinite;
+}
+
+/* Buffy-style keyframes: subtle red-tinged pulse and occasional flicker */
+@keyframes slayerPulse {
+  0% {
+    box-shadow: 0 0 0 rgba(172,184,216,0.0), var(--shadow-md);
+    transform: translateY(0) scale(1);
+    color: #3d4250;
+  }
+  40% {
+    box-shadow: 0 0 18px rgba(160,30,40,0.12), 0 0 8px rgba(172,184,216,0.08);
+    transform: translateY(-1px) scale(1.01);
+    color: #2f2b2b;
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(172,184,216,0.0), var(--shadow-md);
+    transform: translateY(0) scale(1);
+    color: #3d4250;
+  }
+}
+
+@keyframes slayerFlicker {
+  0%, 100% { opacity: 1; }
+  5% { opacity: 0.95; transform: rotate(-0.3deg); }
+  7% { opacity: 1; transform: rotate(0.2deg); }
+  12% { opacity: 0.98; transform: rotate(-0.1deg); }
+  60% { opacity: 1; transform: rotate(0); }
+}
+
+/* Warning-specific keyframes for the plaque */
+@keyframes warningPulse {
+  0% {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18), 0 0 0 rgba(160,30,40,0.0);
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25), 0 0 28px rgba(160,30,40,0.18);
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18), 0 0 0 rgba(160,30,40,0.0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes warningShake {
+  0% { transform: translateX(0); }
+  2% { transform: translateX(-1px); }
+  4% { transform: translateX(1px); }
+  6% { transform: translateX(-1px); }
+  8% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+
+/* === TYPOGRAPHY === */
+.title,
+.input-label,
+.fade-in-text,
+.result-main {
+  color: var(--color-text);
+  text-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 2.8em;
+  margin-bottom: 0.5em;
+}
+
+.fade-in-text {
+  font-size: 1.7em;
+  margin-top: 1em;
+  animation: fadeIn 5s;
+}
+
+/* === Plaque === */
+
+.simple-plaque {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2rem;
+  /* slight translucent, ominous background with a warm red tint */
+  background: linear-gradient(135deg, rgba(160,30,40,0.06), color-mix(in srgb, var(--color-text) 72%, transparent));
+  border-radius: var(--radius-pill);
+  border: transparent; /* warning red */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25), 0 0 6px rgba(160,30,40,0.06);
+  font-family: var(--font-secondary);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--color-text); /* high contrast for warning */
+  text-decoration: double;
+  text-align: center;
+  text-shadow: 1.5px 1px 0 rgba(0,0,0,0.6);
+  user-select: none;
+  margin: 0 auto 1.5rem;
+ 
+  /* stronger, warning-style pulse + occasional jitter to convey urgency */
+  animation: warningPulse 3.6s ease-in-out infinite, warningShake 8s steps(6) infinite;
+}
+
+/* === INPUTS === */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  margin-bottom: 1.5em;
+}
+
+.input-label {
+  display: block;
+  font-size: 2em;
+  transition: var(--transition-fast);
+  margin-bottom: 0.5em;
+}
+
+.input-label:hover {
+  transform: translate(-1px, -1px);
+}
+
+.input-field {
+  border-radius: var(--radius-pill);
+  padding: 0.5em 1.2em;
+
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 1.3em;
+  width: 100%;
+  background: var(--color-text);
+  color: var(--color-shadow);
+
+  border: 1px solid var(--color-shadow);
+  box-shadow: var(--shadow-md);
+
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.input-field:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-lg), var(--glow-soft);
+}
+
+.input-field:focus {
+  outline: none;
+  background: var(--color-accent);
+  box-shadow: var(--shadow-lg), var(--glow-strong);
+}
+
+.input-field::placeholder {
+  color: var(--color-shadow);
+  opacity: 0.5;
+}
+
+
+/* === BUTTON === */
+.question-button {
+  font-family: var(--font-main);
+  font-size: 1.5em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  padding: 0.75em 1.75em;
+
+  background: var(--color-bg);
+  color: var(--color-text);
+
+  border: 1px solid var(--color-shadow);
+  border-radius: var(--radius-pill);
+
+  box-shadow: var(--shadow-md);
+
+  position: relative;
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+}
+
+.question-button::before {
+  content: "✧";
+  margin-right: 0.5em;
+  font-family: var(--font-secondary);
+  opacity: 0.7;
+}
+
+.question-button::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-accent);
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+.question-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-lg), var(--glow-soft);
+}
+
+.question-button:hover::after {
+  opacity: 0.6;
+}
+
+.question-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* === RESULTS === */
+/* === RESULTS === */
+.results {
+  margin-bottom: 2em;
+}
+
+.result-line,
+.result-main {
+  /* default: no wrap on desktop/tablet so typewriter stays on one line */
+  display: inline-block;
+  overflow: hidden; /* clip until width grows via animation */
+  white-space: nowrap; /* prevent wrapping except on phones */
+  padding-bottom: 0.5em;
+}
+
+/* smaller lines */
+.result-line {
+  margin-bottom: 0.8em;
+
+  border-right: 2px solid var(--color-text);
+
+  /* start hidden; animations are applied via JS by adding the
+     `anim-typewriter-line` class so we can sequence them precisely */
+  opacity: 0;
+}
+
+/* main result (stronger emphasis) */
+.result-main {
+  font-size: 2.5em;
+  width: 80%;
+  max-width: 28rem; /* allow more room for wrapped lines */
+  margin: 0 auto;
+
+  color: var(--color-accent);
+
+  border-right: 2px solid var(--color-accent);
+
+  /* start hidden; animations are applied via JS by adding the
+     `anim-typewriter-main` class so we can sequence them precisely */
+  opacity: 0;
+}
+
+/* Slightly reduce font sizes for the first two result lines so they don't overpower the main result */
+#result1 {
+  font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+}
+
+#result2 {
+  font-size: clamp(1rem, 4.2vw, 1.15rem);
+}
+
+/* Animation utility classes - add these to start typing animations */
+.anim-typewriter-line {
+  animation: typewriter 3s steps(40) forwards, blinkCursor 600ms steps(40) infinite;
+}
+
+.anim-typewriter-main {
+  animation: typewriter 4s steps(50) forwards, blinkCursor 600ms steps(50) infinite;
+}
+
+
+/* === STAGGER TIMING === */
+.result-line-1 {
+  animation-delay: 0.5s;
+}
+
+.result-line-2 {
+  animation-delay: 2.5s;
+}
+
+.result-line-3 {
+  animation-delay: 4.5s;
+}
+
+
+/* === TYPEWRITER ANIMATION === */
+@keyframes typewriter {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes blinkCursor {
+  from {
+    border-right-color: currentColor;
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  .result-line,
+  .result-main {
+    animation: none !important;
+    border-right: none;
+  }
+  /* Respect reduced motion: disable plaque animations */
+  .simple-plaque {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+  0%, 30% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes mysticalPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes mysticalRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}
+
+
+/* === RESPONSIVE === */
+/* Mobile: portrait phones - make the outer container and children occupy more of the viewport */
+@media (max-width: 575.98px) {
+  /* Ensure viewport-filling layout but allow internal scrolling when space is tight */
+  html, body {
+    height: 100vh;
+  }
+  .background {
+    background-position: top center;
+    background-repeat: repeat;
+    background-size: contain; /* show entire GIF without cropping */
+    background-color: rgba(0,0,0,0.06); /* subtle fallback behind GIF */
+    /* avoid fixed attachment on some tablet browsers which miscompute 100vh */
+    background-attachment: scroll;
+  }
+
+  /* scale typography smoothly on very small screens */
+  .title { font-size: clamp(1.6rem, 6.5vw, 2.2rem); margin-bottom: 1rem; }
+  .input-label { font-size: clamp(1rem, 4.5vw, 1.15rem); }
+  .fade-in-text { font-size: clamp(0.95rem, 4.2vw, 1.15rem); }
+
+  .outer-container {
+    width: 100%;
+    /* allow content to grow but cap at the viewport height so it can scroll internally */
+    max-height: 100vh;
+    padding: 2rem 1rem;
+    /* vertical: start (top); horizontal: center */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.9rem;
+    overflow: auto; /* enable internal scrolling when needed */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .input-group { width: 100%; }
+  .input-field { width: 90%; font-size: clamp(0.95rem, 4vw, 1.05rem); padding: 0.55em 0.9rem; }
+
+  .question-button {
+    width: 100%;
+    font-size: clamp(0.95rem, 4.2vw, 1.05rem);
+    padding: 0.7em 1rem;
+    margin-top: 0.9rem;
+  }
+
+  /* make main result responsive and avoid overflow */
+  .result-main { font-size: clamp(1.2rem, 6vw, 1.6rem); width: 100%; max-width: 100%; }
+
+  /* Prevent results from growing past the viewport on small phones; allow wrapping only when needed */
+  .result-line,
+  .result-main {
+    max-width: calc(100vw - 2rem); /* leave a small gap for padding/scrollbars */
+    width: auto; /* size to content up to max-width; typewriter animates to 100% of this width */
+    box-sizing: border-box;
+  }
+
+  /* remove heavy decorative after-element on small screens */
+  .outer-container::after {
+    display: none !important;
+    animation: none !important;
+  }
+  .simple-plaque {
+    font-size: 0.9rem;
+  }
+}
+
+/* Small tablets / landscape phones: make tablets behave like phones for UX (fill viewport, no scroll, adaptive fonts) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  /* Ensure viewport-filling layout but allow internal scrolling on smaller tablets */
+  html, body { height: 100vh; }
+  .background {
+    background-position: top center;
+    background-repeat: repeat;
+    background-size: contain; /* show entire GIF without cropping */
+    background-color: rgba(0,0,0,0.06); /* subtle fallback behind GIF */
+    /* avoid fixed attachment on some tablet browsers which miscompute 100vh */
+    background-attachment: scroll;
+  }
+
+  /* adaptive typography using clamp() */
+  .title { font-size: clamp(1.8rem, 5.5vw, 2.4rem); }
+  .input-label { font-size: clamp(1.05rem, 4vw, 1.25rem); }
+
+  .outer-container {
+    width: 100%;
+    max-height: 100vh; /* fill the viewport but allow scroll */
+    padding: 1.75rem 1.5rem;
+    /* vertical: start (top); horizontal: center */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .input-field { max-width: 100%; width: 100%; font-size: clamp(1rem, 4.2vw, 1.1rem); padding: 0.6em 1rem; }
+  .question-button { padding: 0.85em 1.25em; font-size: clamp(1rem, 4.2vw, 1.15rem); }
+
+  /* make main result responsive and avoid overflow */
+  .result-main { font-size: clamp(1.4rem, 5.5vw, 1.8rem); width: 100%; max-width: 100%; }
+
+  /* Allow wrapping on tablets only when content would exceed viewport width */
+  .result-line,
+  .result-main {
+    max-width: calc(100vw - 2rem);
+    width: auto;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* remove heavy decorative after-element on small tablets */
+  .outer-container::after {
+    display: none !important;
+    animation: none !important;
+  }
+}
+
+/* Tablets / small laptops: treat larger tablets similarly to phones for UX improvements (no scroll, adaptive fonts) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* For larger tablets, keep viewport height but allow internal scrolling when necessary */
+  html, body { height: 100vh; }
+  /* Improved background handling for tablets: use `contain` so the full GIF is visible
+     and avoid `background-attachment: fixed` which can cause cropping on some browsers */
+  .background {
+   background-position: top center;
+    background-repeat: repeat;
+    background-size: contain; /* show entire GIF without cropping */
+    background-color: rgba(0,0,0,0.06); /* subtle fallback behind GIF */
+    /* avoid fixed attachment on some tablet browsers which miscompute 100vh */
+    background-attachment: scroll;
+  }
+
+  .title { font-size: clamp(2rem, 5.2vw, 2.6rem); }
+  .input-label { font-size: clamp(1.15rem, 3.8vw, 1.35rem); }
+
+  .outer-container {
+    width: 90%;
+    max-height: 100vh;
+    padding: 2rem 2.5rem;
+    /* vertical: start (top); horizontal: center */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.25rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .input-field { max-width: 100%; width: 100%; font-size: clamp(1.05rem, 3.8vw, 1.15rem); }
+  .question-button { padding: 0.9em 1.5em; font-size: clamp(1.05rem, 3.8vw, 1.2rem); }
+  .result-main { font-size: clamp(1.6rem, 4.6vw, 2rem); }
+
+  /* tablet wrapping rules: only wrap if exceeding viewport width */
+  .result-line,
+  .result-main {
+    max-width: calc(100vw - 2rem);
+    width: auto;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* remove heavy decorative after-element on larger tablets */
+  .outer-container::after {
+    display: none !important;
+    animation: none !important;
+  }
+}
