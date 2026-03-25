@@ -1,0 +1,51 @@
+/* Background, outer container and atmospheric layers */
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url('animation.gif') center / cover no-repeat fixed;
+}
+
+.outer-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.outer-container::before,
+.outer-container::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.outer-container::before {
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 30%, transparent),
+    transparent 70%
+  );
+  animation: mysticalPulse 6s ease-in-out infinite;
+}
+
+.outer-container::after {
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    color-mix(in srgb, var(--color-accent) 20%, transparent),
+    transparent,
+    color-mix(in srgb, var(--color-accent) 30%, transparent),
+    transparent
+  );
+  animation: mysticalRotate 18s linear infinite;
+}
