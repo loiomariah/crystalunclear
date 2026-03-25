@@ -381,6 +381,10 @@ input:active {
 #result2 {
   font-size: clamp(1rem, 4.2vw, 1.15rem);
 }
+#result3 {
+  font-size: clamp(2rem, 4.2vw, 100%);
+  
+}
 
 /* Animation utility classes - add these to start typing animations */
 .anim-typewriter-line {
@@ -388,7 +392,7 @@ input:active {
 }
 
 .anim-typewriter-main {
-  animation: typewriter 4s steps(50) forwards, blinkCursor 600ms steps(50) infinite;
+  animation: typewriter 4s steps(40) forwards, blinkCursor 600ms steps(40) infinite;
 }
 
 
@@ -398,7 +402,7 @@ input:active {
 }
 
 .result-line-2 {
-  animation-delay: 2.0s;
+  animation-delay: 1.0s;
 }
 
 .result-line-3 {
