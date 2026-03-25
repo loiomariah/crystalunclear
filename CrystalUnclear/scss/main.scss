@@ -1,0 +1,23 @@
+// Main SCSS entry point for 7-1 architecture
+// Abstracts
+@import "abstracts/variables";
+@import "abstracts/placeholders";
+@import "abstracts/animations";
+
+// Base
+@import "base/reset";
+@import "base/base";
+
+// Layout
+@import "layout/layout";
+
+// Components
+@import "components/buttons";
+@import "components/forms";
+@import "components/results";
+@import "components/typography";
+
+// Pages
+@import "pages/home";
+
+
