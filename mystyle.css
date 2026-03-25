@@ -361,7 +361,7 @@ input:active {
 .result-main {
   font-size: 2.5em;
   width: 80%;
-  max-width: 28rem; /* allow more room for wrapped lines */
+  max-width: 100%; /* allow more room for wrapped lines */
   margin: 0 auto;
 
   color: var(--color-accent);
